@@ -68,14 +68,11 @@ Significant enhancements can be made to the genetic algorithm:
    
 2. **Activation function:**
 - Function: ReLU (Rectified Linear Unit) is defined for hidden layers : `f(x)=max(0,x)`.
-- It introduces non-linearity to the network, allowing it to learn more complex patterns.
-- Generally faster to compute compared to other activation functions, which helps in reducing training time.
+   - It introduces non-linearity to the network, and generally faster to compute compared to other activation functions, which helps in reducing training time.
 
 - Linear for Output Layer: Linear activation means the output layer neurons directly output the weighted sum of inputs.
-- Suitable for regression tasks or when the output needs to represent unbounded values.
 
-- Alternative - Tanh for Output Layer: 
-- Consider using tanh when the actions in a continuous space need to be bounded within [-1, 1].
+- Alternative - Tanh for Output Layer: Consider using tanh when the actions in a continuous space need to be bounded within [-1, 1].
 
 ### Genetic Algorithm
 1. **Population Initialization:**
