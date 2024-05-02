@@ -8,18 +8,20 @@ Tested on CartPole-v1, MountainCar-v0, and LunarLander-v2, but adaptable to most
 For games with continuous actions and/or different observation structures, adjustments are required in both the variable definitions and the neural network function activations.
 https://gymnasium.farama.org/
 
-## Improvement
+<div>
+  <img src="images/mountainCarGif.gif" alt="MountainCarGif" width="32%">
+  <img src="images/lunarLandingGif.gif" alt="LunarLandingGif" width="32%">
+  <img src="images/cartPoleGif.gif" alt="CartPoleGif" width="32%">   
+</div>
+
+## Fields of Improvement
 Significant enhancements can be made to the genetic algorithm:
 
 - Crossover Algorithm: Integrate a more advanced crossover method that considers the fitness scores of parents. This approach should aim to selectively propagate superior traits.
 - Mutation Algorithm: Implement a more nuanced mutation strategy. Adjust mutation rates dynamically to balance exploration in the initial phases and refinement in later phases.
 - Hyperparameter Adjustment: Develop a method to dynamically adjust hyperparameters as the generations progress. Currently, the mutation rate is modified by a static factor; exploring adaptive adjustments could lead to improved convergence and performance of the algorithm.
 
-<div>
-  <img src="images/mountainCarGif.gif" alt="MountainCarGif" width="32%">
-  <img src="images/lunarLandingGif.gif" alt="LunarLandingGif" width="32%">
-  <img src="images/cartPoleGif.gif" alt="CartPoleGif" width="32%">   
-</div>
+
 
 ## Repository Contents
 - `classes/`: Module containing classes for neural network, environment runner, and genetic algorithms.

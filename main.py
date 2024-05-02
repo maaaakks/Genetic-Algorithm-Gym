@@ -1,6 +1,6 @@
 """
 Description : Gym genetic algorithm working with a lot of environments with discrete actions
-Gymnasium : https://www.gymlibrary.dev/
+Gymnasium : https://gymnasium.farama.org/index.html
 Author : https://github.com/maaaakks
 
 Cheat Sheet Environments :
