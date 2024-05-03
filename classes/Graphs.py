@@ -1,28 +1,23 @@
-# graph.py
-import matplotlib.pyplot as plt
+from torch.utils.tensorboard import SummaryWriter
+import shutil, os
+from datetime import datetime
 
 class Graph:
-    def __init__(self):
-        self.line = None
-        self.ax = None
-        self.fig = None
+    def __init__(self, env_name):
+        # Utilisation de datetime.now pour obtenir un timestamp unique pour le dossier de log
+        timestamp = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
+        self.log_dir = f'runs/{env_name}/{timestamp}'
+        self.create_log_dir()  # Renommage de la méthode
+        self.writer = SummaryWriter(self.log_dir)
 
-    def init_graph(self):
-        plt.ion()
-        self.fig = plt.figure(figsize=(10, 5))
-        self.ax = self.fig.add_subplot(111)
-        self.line, = self.ax.plot([], [], color='#6C63FF', linestyle='-', label='Average Fitness Score per Generation')
-        self.ax.set_xlabel('Generation')
-        self.ax.set_ylabel('Average Fitness Score')
-        self.ax.set_title('Score Over Time')
-        self.ax.legend()
-        self.ax.grid(True)
-        return self.line, self.ax, self.fig
+    def create_log_dir(self):
+        # Création du dossier sans suppression préalable des données existantes
+        os.makedirs(self.log_dir, exist_ok=True)
+        print(f"Log directory created: {self.log_dir}")
 
-    def update_graph(self, fitness_history):
-        self.line.set_xdata(range(len(fitness_history)))
-        self.line.set_ydata(fitness_history)
-        self.ax.relim()
-        self.ax.autoscale_view()
-        self.fig.canvas.draw()
-        self.fig.canvas.flush_events()
+    def log_metrics(self, average_fitness, best_fitness, generation):
+        self.writer.add_scalar('Average Fitness', average_fitness, generation)
+        self.writer.add_scalar('Best Fitness', best_fitness, generation)
+
+    def close(self):
+        self.writer.close()

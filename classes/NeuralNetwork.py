@@ -35,5 +35,6 @@ class NeuralNetwork(nn.Module):
     def forward(self, x):
         x = torch.relu(self.layer1(x))
         x = torch.relu(self.layer2(x))
-        #if self.env_name in self.complex_nn_environments: x = torch.relu(self.layer3(x))
-        return self.output_layer(x)
+        if self.env_name in self.complex_nn_environments: x = torch.relu(self.layer3(x))
+        x = self.output_layer(x)
+        return x
