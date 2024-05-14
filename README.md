@@ -4,11 +4,8 @@
 This project applies a simple genetic algorithm to optimize solutions in various Gymnasium game environments. 
 The genetic algorithm iteratively adjusts neural networks to enhance performance in games.
 
-The genetic algorithm showcased notable limitations in efficiency, primarily due to constraints within the gym environment preventing parallel execution of the population's runs from scratch, its utility remained significant as it presents an intriguing way for exploring the Machine Learning.
-Its utilization underscores the vast potential for enhancing and optimizing algorithms, facilitating faster capitalization on the discovery of novel features.
-
-The genetic algorithm is not the most effecience one as the gym environment doesn't allow us from scratch to parrallelise the running of the population.
-It can be slow but it's an interresting way to explore Machine Learning, and show us that there is a huge room for improvement and optimisation of the algorithm to capitalize faster on the discovery of new features
+The genetic algorithm showcased notable limitations in efficiency, primarily due to constraints within the gym environment preventing parallel execution of the population's runs, its utility remained significant as it presents an intriguing way for exploring Machine Learning.
+Its utilization underscores the vast potential for enhancing and optimizing genetic algorithms, facilitating faster capitalization on the discovery of novel features.
 
 Tested on CartPole-v1, MountainCar-v0, and LunarLander-v2, but adaptable to most games with discrete actions and simple observation spaces.
 For games with continuous actions and/or different observation structures, adjustments are required in both the variable definitions and the neural network function activations.
@@ -29,9 +26,10 @@ Significant enhancements can be made to the genetic algorithm:
 - Neural Network: Reflection and testing need to be conducted on the neural network to optimize the architecture and the activation function used for these environments.
 
 ## Repository Contents
-- `classes/`: Module containing classes for neural network, environment runner, and genetic algorithms.
+- `classes/`: Containing classes for neural network, environment runner, and genetic algorithms.
 - `models/`: Saved pre-trained models for different environments.
-- Main scripts for running simulations and visualizing results.
+- `runs/`: Saved running/training data
+- Main script for running simulations and visualizing results.
 
 ## Setup and Installation
 1. **Clone the repository:**
@@ -58,7 +56,7 @@ Significant enhancements can be made to the genetic algorithm:
         - number of generations
         - hyperparameters like :
             - mutation rate,
-            - minimun mutation rate
+            - minimun mutation rate,
             - selection rate.
     - Adjust these settings to suit your needs. Currently, the mutation rate is set to 0 to exploit the model after training.
     - The mutation rate is reduced by a factor of 0.99 after each generation to facilitate model convergence but can't go lower than the minimun mutation rate.
@@ -66,9 +64,10 @@ Significant enhancements can be made to the genetic algorithm:
 ### Neural Network Configuration
 1. **Architecture Selection:**
    - The neural network is constructed using PyTorch.
-   - The neural network's architecture is chosen depending on the complexity required by the environment.
+   - The neural network's architecture is chosen depending on the complexity required by the environment. (complex and simple)
    - The number of neurons in the input and output layers dynamically adjusts based on the environment's observations (input) and possible actions (output).
    - For less complex games, a basic neural network is used `<input - 16 - 16 - output>`, while more complex environments use an advanced architecture with additional hidden layers `< input - 64 - 64 - 64 - output>`.
+   
    - However, this setup can be significantly enhanced, as it's currently arbitrary, based on empirical experience rather than systematic optimization.
    
 2. **Activation functions:**
