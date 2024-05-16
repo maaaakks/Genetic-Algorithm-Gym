@@ -1,5 +1,9 @@
 # Generic Genetic Algorithm for Gymnasium Environments
 
+<p align="center">
+  <img src="images/illustration.JPG" alt="illustration">
+</p>
+
 ## Project Overview
 This project applies a simple genetic algorithm to optimize solutions in various Gymnasium game environments. 
 The genetic algorithm iteratively adjusts neural networks to enhance performance in games.
