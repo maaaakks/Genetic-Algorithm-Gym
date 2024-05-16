@@ -123,24 +123,33 @@ population size = 100
 - Trained for ~20 generations.
 - Perfect score (500) on every individual of populations over multiple generations.
 
-<p align="center">![graph](images/cartPole_graph.JPG)</p>
-<p align="center">![graph](images/cartPoleGif.gif)</p>
+<p align="center">
+   <img src="images/cartPole_graph.JPG" alt="illustration">
+   <img src="images/cartPoleGif.gif" alt="illustration">
+</p>
 
 ### MountainCar-v0
 - Trained for ~500 generations with a high mutation rate and low selection rate and static seed for each generation to prevent luck based selection.
 - Average score higher than ~110 over multiple generations with a maximum score at -83 for the best individuals of each generations.
 - Highly depend on the spawn location.
-<p align="center">![graph](images/mountainCar_graph.JPG)</p>
-<p align="center">![graph](images/mountainCarGif.gif)</p>
 
+<p align="center">
+   ![graph](images/mountainCar_graph.JPG)
+   ![graph](images/mountainCarGif.gif)
+</p>
+
+![graph](images/mountainCar_graph.JPG)
+![graph](images/mountainCarGif.gif)
 
 ### LunarLander-v2
 - trained ~500 generations with high mutation rate, low selection rate and static seed for each generation to prevent luck based selection.
 - Average score ~225 over multiple generations with a maximum score at ~325 for the best individual.
 - Highly depend on the spawn location.
-<p align="center">![graph](images/lunarLander_graph.JPG)</p>
-<p align="center">![graph](images/lunarLandingGif.gif)</p>
 
+<p align="center">
+   ![graph](images/lunarLander_graph.JPG)
+   ![graph](images/lunarLandingGif.gif)
+</p>
 
 ## Contribution
 Feel free to fork this project, submit pull requests, or propose new features or environments for optimization.
