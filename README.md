@@ -1,7 +1,7 @@
 # Generic Genetic Algorithm for Gymnasium Environments
 
 <p align="center">
-  <img src="images/illustration.JPG" alt="illustration">
+  <img src="images/illustration.JPG" alt="illustration" width="50%">
 </p>
 
 ## Project Overview
