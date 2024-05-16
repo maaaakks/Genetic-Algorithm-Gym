@@ -134,12 +134,9 @@ population size = 100
 - Highly depend on the spawn location.
 
 <p align="center">
-   ![graph](images/mountainCar_graph.JPG)
-   ![graph](images/mountainCarGif.gif)
+   <img src="images/mountainCar_graph.JPG" alt="illustration">
+   <img src="images/mountainCarGif.gif" alt="illustration">
 </p>
-
-![graph](images/mountainCar_graph.JPG)
-![graph](images/mountainCarGif.gif)
 
 ### LunarLander-v2
 - trained ~500 generations with high mutation rate, low selection rate and static seed for each generation to prevent luck based selection.
@@ -147,8 +144,8 @@ population size = 100
 - Highly depend on the spawn location.
 
 <p align="center">
-   ![graph](images/lunarLander_graph.JPG)
-   ![graph](images/lunarLandingGif.gif)
+   <img src="images/lunarLander_graph.JPG" alt="illustration">
+   <img src="images/lunarLandingGif.gif" alt="illustration">
 </p>
 
 ## Contribution
