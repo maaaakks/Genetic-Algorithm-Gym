@@ -36,11 +36,14 @@ if not network_config:
     print(f"Error: 'neural_network' section not found in {config_file_arg}. Exiting.")
     sys.exit(1)
 
+ga_config = app_config.get('genetic_algorithm', {}) # Load GA config, default to empty dict
+
 environment = env.Environment(
     env_name=env_arg, # Use env_arg
     render_mode="human", # rgb_array or human
     save_data = False, # set to True if you want to use tensorboard
-    network_config=network_config, # Add this
+    network_config=network_config, 
+    ga_config=ga_config, # Add this
     population_size=100,
     generations=30000,
     

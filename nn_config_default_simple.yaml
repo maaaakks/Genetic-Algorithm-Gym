@@ -1,4 +1,4 @@
-# nn_config.yaml
+# nn_config_default_simple.yaml
 neural_network:
   hidden_layers:
     - neurons: 16
@@ -8,10 +8,22 @@ neural_network:
   output_layer:
     activation: 'Linear'
 
+genetic_algorithm:
+  selection:
+    type: 'truncation'  # Options: 'truncation', 'tournament', 'rank_based'
+    # tournament_size: 3 # Only used if type is 'tournament'
+
+  crossover:
+    type: 'average'     # Options: 'average', 'uniform', 'one_point'
+    # mixing_probability: 0.5 # Only used if type is 'uniform'
+
+  mutation:
+    per_gene_mutation_prob: 0.05 # Probability for each gene to be mutated
+
 # Add other general app settings here if desired in the future
 # general_settings:
 #   population_size: 100
 #   generations: 30000
-#   mutation_rate: 0.1
+#   mutation_rate: 0.1 # This is now mutation_strength
 #   min_mutation_rate: 0.005
 #   selection_rate: 0.5
