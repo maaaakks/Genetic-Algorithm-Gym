@@ -1,0 +1,17 @@
+# nn_config.yaml
+neural_network:
+  hidden_layers:
+    - neurons: 16
+      activation: 'ReLU'
+    - neurons: 16
+      activation: 'ReLU'
+  output_layer:
+    activation: 'Linear'
+
+# Add other general app settings here if desired in the future
+# general_settings:
+#   population_size: 100
+#   generations: 30000
+#   mutation_rate: 0.1
+#   min_mutation_rate: 0.005
+#   selection_rate: 0.5

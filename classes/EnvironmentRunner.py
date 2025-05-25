@@ -4,9 +4,11 @@ import classes.GeneticAlgorithm as GA
 import classes.Graphs as graph
 
 class Environment:
-    def __init__(self, env_name, render_mode, save_data, population_size, generations, mutation_rate, min_mutation_rate, selection_rate):
+    def __init__(self, env_name, render_mode, save_data, network_config, population_size, generations, mutation_rate, min_mutation_rate, selection_rate):
         self.env = gym.make(env_name, render_mode=render_mode) 
-        self.GA = GA.GeneticAlgorithm(self.env, population_size, selection_rate)
+        self.network_config = network_config # Store network_config
+        
+        self.GA = GA.GeneticAlgorithm(self.env, self.network_config, population_size, selection_rate)
         
         self.render_mode = render_mode
         self.save_data = save_data

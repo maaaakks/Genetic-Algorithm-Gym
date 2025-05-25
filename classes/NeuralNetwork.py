@@ -1,40 +1,48 @@
-#
-# You can customize the NN for each environment
-#
-#
-
 import torch
 import torch.nn as nn
 
 class NeuralNetwork(nn.Module):
-    def __init__(self, env):
-        self.actions = env.action_space.n
-        self.state_size = env.observation_space.shape[0]
-        self.env_name = str(env.unwrapped.spec.id)
-        self.complex_nn_environments = [
-            "LunarLander-v2",
-            ]
-        
-        def complex_nn():
-            self.layer1 = nn.Linear(self.state_size, 64)
-            self.layer2 = nn.Linear(64, 64)
-            self.layer3 = nn.Linear(64, 64)
-            self.output_layer = nn.Linear(64, self.actions)
-
-        def simple_nn():
-            super(NeuralNetwork, self).__init__()
-            self.layer1 = nn.Linear(self.state_size, 16)
-            self.layer2 = nn.Linear(16, 16)
-            self.output_layer = nn.Linear(16, self.actions)
-        
+    def __init__(self, input_size: int, output_size: int, network_config: dict):
         super(NeuralNetwork, self).__init__()
-        if self.env_name in self.complex_nn_environments: complex_nn()
-        else:simple_nn()
+        
+        self.layers = nn.Sequential()
+        current_size = input_size
 
-            
+        activation_mapping = {
+            'ReLU': nn.ReLU,
+            'Tanh': nn.Tanh,
+            'Sigmoid': nn.Sigmoid,
+            'LeakyReLU': nn.LeakyReLU,
+            # nn.Identity is used for 'Linear' activation
+        }
+
+        # Hidden Layers
+        if 'hidden_layers' in network_config and network_config['hidden_layers']:
+            for i, layer_conf in enumerate(network_config['hidden_layers']):
+                neurons = layer_conf['neurons']
+                activation_name = layer_conf['activation']
+                
+                self.layers.add_module(f"hidden_linear_{i}", nn.Linear(current_size, neurons))
+                
+                if activation_name != 'Linear':
+                    activation_fn_class = activation_mapping.get(activation_name)
+                    if activation_fn_class:
+                        self.layers.add_module(f"hidden_activation_{i}", activation_fn_class())
+                    else:
+                        # Default to ReLU if activation is not found and not Linear
+                        self.layers.add_module(f"hidden_activation_{i}", nn.ReLU())
+                current_size = neurons
+        
+        # Output Layer
+        self.layers.add_module("output_linear", nn.Linear(current_size, output_size))
+        output_activation_name = network_config.get('output_layer', {}).get('activation', 'Linear')
+        
+        if output_activation_name != 'Linear':
+            output_activation_fn_class = activation_mapping.get(output_activation_name)
+            if output_activation_fn_class:
+                self.layers.add_module("output_activation", output_activation_fn_class())
+            # If output activation is not 'Linear' and not in mapping, no activation is added (effectively linear)
+
+
     def forward(self, x):
-        x = torch.relu(self.layer1(x))
-        x = torch.relu(self.layer2(x))
-        if self.env_name in self.complex_nn_environments: x = torch.relu(self.layer3(x))
-        x = self.output_layer(x)
-        return x
+        return self.layers(x)

@@ -46,11 +46,19 @@ Significant enhancements can be made to the genetic algorithm:
     pip install torch gymnasium
 
 3. **Run the simulation:** 
-    Execute the simulation for a specific environment by providing its identifier as a argument.
-    By default 'CartPole-v1'.
+    Execute the simulation for a specific environment by providing its identifier as a command-line argument. You can also provide an optional second argument to specify the path to a neural network configuration YAML file. If no configuration file is specified, `nn_config_default_simple.yaml` will be used.
     Pre-trained models are available in the "models" folder and can be deleted to initiate training from scratch.
     ```bash
-    python main.py <environment_id>
+    # Run with default environment (CartPole-v1) and default NN config (nn_config_default_simple.yaml)
+    python main.py
+
+    # Run with a specific environment and default NN config
+    python main.py LunarLander-v2
+
+    # Run with a specific environment and a custom NN config
+    python main.py MountainCar-v0 nn_config_lunarlander_test.yaml 
+    # (assuming nn_config_lunarlander_test.yaml or your custom file exists)
+    ```
     
 ### Environment Setup
 1. **Initialization:**
@@ -66,30 +74,40 @@ Significant enhancements can be made to the genetic algorithm:
     - The mutation rate is reduced by a factor of 0.99 after each generation to facilitate model convergence but can't go lower than the minimun mutation rate.
 
 ### Neural Network Configuration
-1. **Architecture Selection:**
-   - The neural network is constructed using PyTorch.
-   - The neural network's architecture is chosen depending on the complexity required by the environment. (complex and simple)
-   - The number of neurons in the input and output layers dynamically adjusts based on the environment's observations (input) and possible actions (output).
-   - For less complex games, a basic neural network is used `<input - 16 - 16 - output>`, while more complex environments use an advanced architecture with additional hidden layers `< input - 64 - 64 - 64 - output>`.
-   
-   - However, this setup can be significantly enhanced, as it's currently arbitrary, based on empirical experience rather than systematic optimization.
-   
-2. **Activation functions:**
-- Through extensive testing of various activation functions, it was discovered that exclusively utilizing the ReLU function (f(x) = max(0, x)) for the hidden layers consistently outperformed other architectures.
+The architecture of the neural network used by the agent is now highly configurable via a YAML file. By default, `main.py` uses `nn_config_default_simple.yaml` (a simple 2-layer network with 16 neurons each), but you can specify a custom configuration file as a command-line argument (see "Run the simulation" section).
 
-- Findings:
-   - ReLU Dominance:
-       The ReLU activation function demonstrated superior performance across multiple experiments.
-       Its simplicity and effectiveness make it a standout choice for hidden layer activation.
-   - Alternative Approach Evaluation:
-       An alternative architecture was explored, incorporating a sigmoid function for the first layer.
-       The objective was to retain information from negative values, albeit this approach proved slower and less successful in achieving superior performance.
-   - Performance Comparison:
-       Despite extended training over multiple generations, the sigmoid-based architecture failed to surpass the performance of the ReLU-based model.
+The configuration file defines the hidden layers and the activation function for the output layer. The input layer's size is automatically determined by the environment's observation space, and the output layer's neuron count is determined by the environment's action space.
 
-- This strategy is still undergoing testing.
+**YAML Structure:**
+An example structure for a configuration file (e.g., `nn_config_default_simple.yaml` or your own `my_custom_nn.yaml`):
+```yaml
+# Example: nn_config_default_simple.yaml
+neural_network:
+  hidden_layers:
+    - neurons: 16  # Number of neurons in the first hidden layer
+      activation: 'ReLU'  # Activation function for the first hidden layer
+    - neurons: 16  # Number of neurons in the second hidden layer
+      activation: 'ReLU'  # Activation function for the second hidden layer
+    # Add more hidden layers as needed
+    # - neurons: N
+    #   activation: 'FunctionName'
+  output_layer:
+    activation: 'Linear' # Activation for the output layer.
+                         # Typically 'Linear' for discrete action spaces using argmax.
+                         # Other PyTorch nn module names like 'Tanh', 'Sigmoid' can be used.
+```
 
-- Alternative - Tanh for Output Layer: Consider using tanh instead of the linear function when the actions in a continuous space need to be bounded within [-1, 1].
+**Key Points:**
+-   **`neural_network`**: The root key for network configuration.
+-   **`hidden_layers`**: A list where each item defines a hidden layer with:
+    -   `neurons`: The number of neurons in that layer.
+    -   `activation`: The name of the PyTorch activation function (e.g., `ReLU`, `Tanh`, `Sigmoid`, `LeakyReLU`). If 'Linear' is specified, no explicit activation function is applied after that layer's linear transformation.
+-   **`output_layer`**: Defines the activation for the output layer.
+    -   `activation`: Typically 'Linear' for classification/discrete action spaces where `argmax` is used on the raw scores. For continuous actions bounded, e.g., in `[-1, 1]`, `Tanh` might be appropriate.
+
+You can create your own `*.yaml` files with custom architectures (e.g., more layers, different neuron counts, different activation functions) and pass the filename to `main.py`. This allows for flexible experimentation with network structures without modifying the core Python code.
+
+The old system of "simple" (`<input - 16 - 16 - output>`) and "complex" (`<input - 64 - 64 - 64 - output>`) architectures has been replaced by this YAML-based configuration. Example configurations like `nn_config_cartpole_test.yaml` (20-20 neurons) and `nn_config_lunarlander_test.yaml` (64-64-64 neurons) are provided as starting points.
 
 ### Genetic Algorithm
 1. **Population Initialization:**
