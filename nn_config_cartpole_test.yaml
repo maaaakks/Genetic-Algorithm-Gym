@@ -1,0 +1,9 @@
+# nn_config_cartpole_test.yaml
+neural_network:
+  hidden_layers:
+    - neurons: 20 # Slightly different from default simple
+      activation: 'ReLU'
+    - neurons: 20
+      activation: 'ReLU'
+  output_layer:
+    activation: 'Linear'

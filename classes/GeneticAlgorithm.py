@@ -2,11 +2,17 @@ import classes.NeuralNetwork as NN
 import torch, random, copy
 
 class GeneticAlgorithm:
-    def __init__(self, env, population_size, selection_rate):
+    def __init__(self, env, network_config, population_size, selection_rate):
         self.save_file = str("models/" + env.unwrapped.spec.id + ".pth")
+        self.network_config = network_config # Store network_config
         self.population_size = population_size
         self.selection_rate = selection_rate
-        self.population = [NN.NeuralNetwork(env) for _ in range(population_size)]
+        
+        # Get input_size and output_size from env
+        input_size = env.observation_space.shape[0]
+        output_size = env.action_space.n
+        
+        self.population = [NN.NeuralNetwork(input_size, output_size, self.network_config) for _ in range(population_size)]
 
     # Genetic selection functions
     def select(self, fitness_scores): # Select a proportion of the population to become parents based on fitness scores

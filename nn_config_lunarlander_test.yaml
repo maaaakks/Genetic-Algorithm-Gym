@@ -1,0 +1,11 @@
+# nn_config_lunarlander_test.yaml
+neural_network:
+  hidden_layers:
+    - neurons: 64
+      activation: 'ReLU'
+    - neurons: 64
+      activation: 'ReLU'
+    - neurons: 64
+      activation: 'ReLU'
+  output_layer:
+    activation: 'Linear'
